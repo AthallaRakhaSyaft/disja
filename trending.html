@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending</title>
+    <link rel="icon" href="logo.jpg" type="image/jpg"> <!-- Ikon favicon -->
+    <style>
+        /* Reset dasar untuk mengurangi ketidaksesuaian gaya antara browser */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Menata body dan header */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #e3f2fd; /* Latar belakang biru muda */
+            color: #333;
+        }
+
+        header {
+            background-color: #1976d2; /* Biru gelap */
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Menata logo */
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo-img {
+            width: 60px; /* Mengatur lebar logo */
+            height: 60px; /* Mengatur tinggi logo */
+            border-radius: 50%; /* Membuat logo berbentuk bulat */
+            object-fit: cover; /* Mengatur agar gambar menyesuaikan ukuran */
+        }
+
+        /* Styling input dan tombol pencarian */
+        #search {
+            padding: 10px;
+            width: 70%;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        #search-btn {
+            background: linear-gradient(135deg, #0288d1, #1976d2); /* Gradasi biru */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px; /* Membuat tombol lebih bulat */
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Menata navigasi */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid #f1f1f1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            margin: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1976d2; /* Warna biru */
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px 30px;
+            border-radius: 30px; /* Tombol lebih bulat */
+            background-color: #e3f2fd; /* Biru muda */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #1976d2; /* Biru gelap saat hover */
+            color: white;
+            transform: translateY(-4px); /* Efek tombol terangkat */
+        }
+
+        .nav-links a.active {
+            background-color: #0d47a1; /* Biru sangat gelap untuk aktif link */
+            color: white;
+        }
+
+        /* Menata tampilan produk */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product h2 {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .product p {
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .product .price {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Styling Tombol "Lihat Produk" */
+        .product .buy-button {
+            background: linear-gradient(135deg, #1976d2, #0288d1); /* Gradasi biru */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px; /* Membuat tombol lebih bulat */
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bayangan halus untuk tombol */
+        }
+
+        /* Efek hover tombol */
+        .product .buy-button:hover {
+            background: linear-gradient(135deg, #0288d1, #1976d2); /* Gradasi terbalik */
+            transform: translateY(-4px); /* Efek angkat saat hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Bayangan lebih besar saat hover */
+        }
+
+        /* Responsivitas untuk tampilan mobile */
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            header input {
+                width: 90%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                padding: 15px;
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .product-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product {
+                width: 80%;
+            }
+
+            .product img {
+                height: 200px;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+
+        /* Reset dasar untuk mengurangi ketidaksesuaian gaya antara browser */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Menata body dan header */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #e3f2fd; /* Latar belakang biru muda */
+            color: #333;
+        }
+
+        header {
+            background-color: #1976d2; /* Biru gelap */
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start; /* Menempatkan logo di kiri */
+            align-items: center;
+        }
+
+        /* Menata logo */
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 60px; /* Mengatur lebar logo */
+            height: 60px; /* Mengatur tinggi logo */
+            border-radius: 50%; /* Membuat logo berbentuk bulat */
+            object-fit: cover; /* Mengatur agar gambar menyesuaikan ukuran */
+        }
+
+        /* Styling input dan tombol pencarian */
+        #search {
+            padding: 10px;
+            width: 70%;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        #search-btn {
+            background: linear-gradient(135deg, #0288d1, #1976d2); /* Gradasi biru */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px; /* Membuat tombol lebih bulat */
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Menata navigasi */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid #f1f1f1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            margin: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1976d2; /* Warna biru */
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px 30px;
+            border-radius: 30px; /* Tombol lebih bulat */
+            background-color: #e3f2fd; /* Biru muda */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #1976d2; /* Biru gelap saat hover */
+            color: white;
+            transform: translateY(-4px); /* Efek tombol terangkat */
+        }
+
+        .nav-links a.active {
+            background-color: #0d47a1; /* Biru sangat gelap untuk aktif link */
+            color: white;
+        }
+
+        /* Menata tampilan produk */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product h2 {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .product p {
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .product .price {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Styling Tombol "Lihat Produk" */
+        .product .buy-button {
+            background: linear-gradient(135deg, #1976d2, #0288d1); /* Gradasi biru */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px; /* Membuat tombol lebih bulat */
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bayangan halus untuk tombol */
+        }
+
+        /* Efek hover tombol */
+        .product .buy-button:hover {
+            background: linear-gradient(135deg, #0288d1, #1976d2); /* Gradasi terbalik */
+            transform: translateY(-4px); /* Efek angkat saat hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Bayangan lebih besar saat hover */
+        }
+
+        /* Responsivitas untuk tampilan mobile */
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            header input {
+                width: 90%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                padding: 15px;
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .product-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product {
+                width: 80%;
+            }
+
+            .product img {
+                height: 200px;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="logo.jpg" alt="Logo Disja" class="logo-img">
+    </div>
+
+    <header>
+        <input type="text" id="search" placeholder="Cari produk atau pengguna...">
+        <button id="search-btn">Cari</button>
+    </header>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="trending.html" class="active">Trending</a></li>
+            <li><a href="livedanvideo.html">Live & Video</a></li>
+            <li><a href="notifikasi.html">Notifikasi</a></li>
+            <li><a href="profil.html">Profil</a></li>
+            <li><a href="keranjang.html">Keranjang</a></li>
+            <li><a href="chat.html">Chat</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div class="product-container" id="product-list">
+            <div class="product">
+                <img src="foto1.jpeg" alt="Product 1">
+                <h3>Produk 1</h3>
+                <p>Deskripsi lengkap tentang Produk 1. Produk ini memiliki kualitas terbaik, fitur unggulan, dan harga yang terjangkau.</p>
+                <div class="price">Rp 100.000</div>
+                <button class="buy-button">Lihat Produk</button>
+            </div>
+            <div class="product">
+                <img src="foto2.jpg" alt="Product 2">
+                <h3>Produk 2</h3>
+                <p>Deskripsi lengkap tentang Produk 2. Produk ini memiliki kualitas terbaik, fitur unggulan, dan harga yang terjangkau.</p>
+                <div class="price">Rp 200.000</div>
+                <button class="buy-button">Lihat Produk</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Ambil elemen input dan tombol cari
+        const searchInput = document.getElementById('search');
+        const searchButton = document.getElementById('search-btn');
+        const productList = document.getElementById('product-list');
+        const products = document.querySelectorAll('.product');
+
+        // Fungsi untuk menyaring produk berdasarkan nama atau deskripsi
+        function filterProducts(query) {
+            products.forEach(product => {
+                const productName = product.querySelector('h3').textContent.toLowerCase();
+                const productDescription = product.querySelector('p').textContent.toLowerCase();
+                if (productName.includes(query.toLowerCase()) || productDescription.includes(query.toLowerCase())) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Event listener untuk tombol cari
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            filterProducts(query);
+        });
+
+        // Optional: Pencarian saat mengetik (live search)
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+            filterProducts(query);
+        });
+    </script>
+</body>
+</html>

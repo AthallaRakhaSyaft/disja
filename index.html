@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disja</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="logo.jpg" type="image/jpg"> <!-- Ikon favicon -->
+    <style>
+        /* Reset dasar untuk mengurangi ketidaksesuaian gaya antara browser */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Menata body dan header */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #e3f2fd; /* Latar belakang biru muda */
+            color: #333;
+        }
+
+        header {
+            background-color: #1976d2; /* Biru gelap */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.5rem; /* Ukuran font yang lebih kecil di mobile */
+            margin-bottom: 10px;
+        }
+
+        header input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        /* Menata navigasi */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid #f1f1f1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1976d2; /* Warna biru */
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px 30px;
+            border-radius: 30px; /* Tombol lebih bulat */
+            background-color: #e3f2fd; /* Biru muda */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #1976d2; /* Biru gelap saat hover */
+            color: white;
+            transform: translateY(-4px); /* Efek tombol terangkat */
+        }
+
+        .nav-links a.active {
+            background-color: #0d47a1; /* Biru sangat gelap untuk aktif link */
+            color: white;
+        }
+
+        /* Menata tampilan produk */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product h2 {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .product p {
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .product button {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product button:hover {
+            background-color: #0288d1;
+        }
+
+        /* Responsivitas untuk tampilan mobile */
+        @media screen and (max-width: 768px) {
+            /* Menyesuaikan ukuran header */
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            header input {
+                width: 90%; /* Lebih lebar di mobile */
+            }
+
+            /* Menata navigasi menjadi vertikal pada mobile */
+            .nav-links {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            /* Menata produk untuk lebih responsif */
+            .product-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Menyesuaikan lebar produk untuk mobile */
+            .product {
+                width: 90%;
+            }
+
+            .nav-links a {
+                font-size: 1rem; /* Ukuran font sedikit lebih kecil di mobile */
+                padding: 10px 20px;
+            }
+        }
+
+        /* Gaya untuk tombol Check Produk */
+.check-product-btn {
+    display: inline-block;
+    background-color: #0288d1; /* Biru terang */
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 20px; /* Sudut bulat */
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+}
+
+/* Efek hover untuk Check Produk */
+.check-product-btn:hover {
+    background-color: #1976d2; /* Biru gelap saat hover */
+    transform: translateY(-4px); /* Efek tombol terangkat */
+}
+
+/* Menambahkan gaya aktif (jika ingin menambahkan status aktif untuk tombol) */
+.check-product-btn.active {
+    background-color: #0d47a1; /* Biru sangat gelap untuk tombol aktif */
+}
+
+/* Menata tombol Cari */
+#search-btn {
+    background-color: #0288d1; /* Biru terang */
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 20px; /* Sudut bulat */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+}
+
+/* Efek hover untuk tombol Cari */
+#search-btn:hover {
+    background-color: #1976d2; /* Biru gelap saat hover */
+    transform: translateY(-4px); /* Efek tombol terangkat */
+}
+
+/* Efek fokus saat tombol Cari mendapatkan fokus */
+#search-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.8); /* Fokus dengan highlight biru */
+}
+
+/* Styling header */
+header {
+    background-color: #1976d2; /* Warna biru */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Wrapper untuk input dan tombol */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: white; /* Latar belakang putih */
+    border-radius: 25px; /* Membuat tampilan lebih rapi */
+    overflow: hidden; /* Supaya border radius rapi */
+}
+
+/* Styling input pencarian */
+header input {
+    width: 300px; /* Tetapkan lebar */
+    padding: 12px;
+    border: none;
+    border-radius: 25px 0 0 25px; /* Hanya sudut kiri yang melengkung */
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Styling tombol Cari */
+#search-btn {
+    background: linear-gradient(135deg, #0288d1, #1976d2); /* Gradasi biru */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px; /* Membuat tombol lebih bulat */
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bayangan lembut */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Styling header */
+header {
+    background-color: #1976d2; /* Warna biru */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Wrapper untuk input dan tombol */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: white; /* Latar belakang putih */
+    border-radius: 25px; /* Membuat tampilan lebih rapi */
+    overflow: hidden; /* Supaya border radius rapi */
+}
+
+header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #1976d2;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 50px; /* Ukuran logo */
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        header input {
+            width: 300px;
+            padding: 12px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+        #search-btn {
+            background: linear-gradient(135deg, #0288d1, #1976d2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Menyusun logo di tengah halaman */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Atur margin sesuai kebutuhan */
+}
+
+.logo img {
+    width: 100px; /* Sesuaikan ukuran logo */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* Agar logo berbentuk lingkaran */
+}
+    </style>
+</head>
+<body>
+    <center>
+        <div class="logo">
+            <img src="logo.jpg" alt="Logo Disja">
+        </div>
+    </center>
+
+    <header>
+        <input type="text" id="search" placeholder="Cari produk atau pengguna...">
+        <button id="search-btn">Cari</button> <!-- Tombol Cari -->
+    </header>    
+    
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Beranda</a></li>
+            <li><a href="trending.html">Trending</a></li>
+            <li><a href="livedanvideo.html">Live & Video</a></li>
+            <li><a href="notifikasi.html">Notifikasi</a></li>
+            <li><a href="profil.html">Profil</a></li>
+            <li><a href="keranjang.html">Keranjang</a></li>
+            <li><a href="chat.html">Chat</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div class="product-container" id="product-list">
+            <!-- Produk akan ditambahkan di sini oleh JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const productList = document.getElementById("product-list");
+    const searchButton = document.getElementById("search-btn");
+    const searchInput = document.getElementById("search");
+
+    const products = [
+        { id: 1, name: "Produk 1", price: "Rp 100.000", image: "foto1.jpeg" },
+        { id: 2, name: "Produk 2", price: "Rp 200.000", image: "foto2.jpg" },
+        { id: 3, name: "Produk 3", price: "Rp 150.000", image: "foto3.jpeg" },
+        { id: 4, name: "Produk 4", price: "Rp 200.000", image: "foto4.jpg" },
+        { id: 5, name: "Produk 5", price: "Rp 1.000.000", image: "foto5.jpeg" },
+        { id: 6, name: "Produk 6", price: "Rp 1.400.000", image: "foto6.jpeg" },
+        { id: 7, name: "Produk 7", price: "Rp 8.300.000", image: "foto7.jpeg" },
+        { id: 8, name: "Produk 8", price: "Rp 12.600.000", image: "foto8.jpg" },
+    ];
+
+    // Fungsi untuk menampilkan produk
+    function displayProducts(productsToDisplay) {
+        productList.innerHTML = "";
+        productsToDisplay.forEach(product => {
+            const productElement = document.createElement("div");
+            productElement.classList.add("product");
+            productElement.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <p>${product.price}</p>
+                <!-- Tombol Check Produk -->
+                <a href="produk.html?id=${product.id}" class="check-product-btn">Check Produk</a>
+                <!-- Tombol Tambah ke Keranjang -->
+                <button class="add-to-cart" data-id="${product.id}">Tambah ke Keranjang</button>
+            `;
+            productList.appendChild(productElement);
+        });
+    }
+
+    // Fungsi pencarian produk
+    function searchProducts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredProducts = products.filter(product =>
+            product.name.toLowerCase().includes(searchTerm)
+        );
+        displayProducts(filteredProducts);
+    }
+
+    // Menampilkan produk saat halaman dimuat
+    displayProducts(products);
+
+    // Menambahkan event listener untuk tombol Cari
+    searchButton.addEventListener("click", searchProducts);
+
+    // Menambahkan event listener untuk pencarian saat mengetik di input
+    searchInput.addEventListener("input", searchProducts);
+});
+    </script>    
+</body>
+</html>

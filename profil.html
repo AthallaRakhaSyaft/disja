@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon (icon) for the site -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <style>
+        /* Reset dasar untuk mengurangi ketidaksesuaian gaya antara browser */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Menata body dan header */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #1976d2; /* Biru gelap */
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        header a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            background-color: #0288d1; /* Biru terang */
+            padding: 12px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        header a:hover {
+            background-color: #1976d2;
+        }
+
+        /* Menata navigasi */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid #f1f1f1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1976d2;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            border-radius: 25px;
+            background-color: #f4f4f9;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #1976d2;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .nav-links a.active {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        /* Menata profil pengguna */
+        .profile-container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-info img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .profile-info p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .profile-info button {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .profile-info button:hover {
+            background-color: #0288d1;
+            transform: translateY(-2px);
+        }
+
+        /* Form Edit Profil */
+        .edit-form {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .edit-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .edit-form button {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-form button:hover {
+            background-color: #0288d1;
+        }
+
+        /* Riwayat Pesanan */
+        .order-history h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .order-history ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .order-history li {
+            background-color: #f4f4f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            color: #444;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsivitas untuk tampilan mobile */
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            .profile-container {
+                padding: 20px;
+            }
+
+            .profile-info img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .profile-info h2 {
+                font-size: 1.8rem;
+            }
+
+            .profile-info p {
+                font-size: 1rem;
+            }
+
+            .order-history li {
+                font-size: 1rem;
+            }
+        }
+
+        header img {
+            width: 50px; /* Ukuran logo */
+            height: 50px;
+            border-radius: 50%; /* Membuat logo bulat */
+            margin-bottom: 10px;
+            background: transparent; /* Pastikan background transparan */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="Logo Disja">
+    </header>
+    
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="trending.html">Trending</a></li>
+            <li><a href="livedanvideo.html">Live & Video</a></li>
+            <li><a href="notifikasi.html">Notifikasi</a></li>
+            <li><a href="profil.html" class="active">Profil</a></li>
+            <li><a href="keranjang.html">Keranjang</a></li>
+            <li><a href="chat.html">Chat</a></li>
+        </ul>
+    </nav>
+    
+    <header>
+        <a href="index.html" id="back-btn">Kembali ke Beranda</a>
+    </header>
+    
+    <main>
+        <div class="profile-container">
+            <div class="profile-info">
+                <img src="rakha.jpeg" alt="Foto Profil" class="profile-pic">
+                <h2 id="profile-name">Nama Pengguna</h2>
+                <p id="profile-email">Email: pengguna@example.com</p>
+                <p id="profile-phone">Nomor Telepon: +62 123 456 7890</p>
+                <button id="edit-btn">Edit Profil</button>
+            </div>
+
+            <div class="edit-form" id="edit-form">
+                <input type="text" id="edit-name" placeholder="Nama" required>
+                <input type="email" id="edit-email" placeholder="Email" required>
+                <input type="tel" id="edit-phone" placeholder="Nomor Telepon" required>
+                <button id="save-btn">Simpan Perubahan</button>
+            </div>
+
+            <div class="order-history">
+                <h3>Riwayat Pesanan</h3>
+                <ul>
+                    <li>Produk A - Status: Dikirim</li>
+                    <li>Produk B - Status: Selesai</li>
+                    <li>Produk C - Status: Dikirim</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Memuat data dari localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedProfile = JSON.parse(localStorage.getItem('profile'));
+            if (savedProfile) {
+                document.getElementById('profile-name').textContent = savedProfile.name;
+                document.getElementById('profile-email').textContent = 'Email: ' + savedProfile.email;
+                document.getElementById('profile-phone').textContent = 'Nomor Telepon: ' + savedProfile.phone;
+            }
+        });
+
+        // Tombol untuk mengedit profil
+        document.getElementById('edit-btn').addEventListener('click', function() {
+            document.getElementById('edit-form').style.display = 'block';
+            document.getElementById('edit-name').value = document.getElementById('profile-name').textContent;
+            document.getElementById('edit-email').value = document.getElementById('profile-email').textContent.replace('Email: ', '');
+            document.getElementById('edit-phone').value = document.getElementById('profile-phone').textContent.replace('Nomor Telepon: ', '');
+        });
+
+        // Tombol untuk menyimpan perubahan
+        document.getElementById('save-btn').addEventListener('click', function() {
+            const updatedProfile = {
+                name: document.getElementById('edit-name').value,
+                email: document.getElementById('edit-email').value,
+                phone: document.getElementById('edit-phone').value
+            };
+            localStorage.setItem('profile', JSON.stringify(updatedProfile));
+
+            // Memperbarui tampilan dengan data terbaru
+            document.getElementById('profile-name').textContent = updatedProfile.name;
+            document.getElementById('profile-email').textContent = 'Email: ' + updatedProfile.email;
+            document.getElementById('profile-phone').textContent = 'Nomor Telepon: ' + updatedProfile.phone;
+
+            // Menyembunyikan form edit
+            document.getElementById('edit-form').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
