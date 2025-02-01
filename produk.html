@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deskripsi Produk - Shopee Clone</title>
+    <title>Deskripsi Produk</title>
+    <link rel="icon" href="logo.jpg" type="image/jpg"> <!-- Ikon favicon -->
     <style>
         /* Reset dasar untuk mengurangi ketidaksesuaian gaya antara browser */
         * {
@@ -25,11 +26,23 @@
             background-color: #1976d2;
             color: white;
             padding: 20px;
+            display: flex;
+            justify-content: center; /* Menyatukan logo di tengah secara horizontal */
+            align-items: center; /* Menyatukan logo di tengah secara vertikal */
         }
 
         header h1 {
             font-size: 2rem;
             margin-bottom: 10px;
+            margin-left: 10px;
+        }
+
+        /* Menata logo */
+        .logo {
+            width: 40px; /* Mengatur lebar logo */
+            height: 40px; /* Mengatur tinggi logo */
+            border-radius: 50%;
+            object-fit: cover; /* Membuat gambar menyesuaikan ukuran */
         }
 
         /* Menata deskripsi produk */
@@ -87,8 +100,10 @@
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Deskripsi Produk</h1>
+        <!-- Logo di header -->
+        <img src="logo.jpg" alt="Logo Disja" class="logo">
     </header>
 
     <div class="product-description-container">

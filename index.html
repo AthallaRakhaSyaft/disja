@@ -384,11 +384,18 @@ header {
         </div>
     </main>
 
+    <!-- Tambahkan tempat untuk menampilkan jumlah produk di keranjang -->
+        <div class="cart-icon">
+        <img src="cart-icon.png" alt="Keranjang">
+        <span id="cart-count">0</span>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
     const productList = document.getElementById("product-list");
     const searchButton = document.getElementById("search-btn");
     const searchInput = document.getElementById("search");
+    const cartCount = document.getElementById("cart-count"); // Icon keranjang
 
     const products = [
         { id: 1, name: "Produk 1", price: "Rp 100.000", image: "foto1.jpeg" },
@@ -411,13 +418,38 @@ header {
                 <img src="${product.image}" alt="${product.name}">
                 <h2>${product.name}</h2>
                 <p>${product.price}</p>
-                <!-- Tombol Check Produk -->
                 <a href="produk.html?id=${product.id}" class="check-product-btn">Check Produk</a>
-                <!-- Tombol Tambah ke Keranjang -->
                 <button class="add-to-cart" data-id="${product.id}">Tambah ke Keranjang</button>
             `;
             productList.appendChild(productElement);
         });
+
+        // Menambahkan event listener pada tombol "Tambah ke Keranjang"
+        const addToCartButtons = document.querySelectorAll(".add-to-cart");
+        addToCartButtons.forEach(button => {
+            button.addEventListener("click", (e) => {
+                const productId = e.target.getAttribute("data-id");
+                addToCart(productId);
+            });
+        });
+    }
+
+    // Fungsi untuk menambahkan produk ke keranjang
+    function addToCart(productId) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const product = products.find(p => p.id == productId);
+
+        if (product) {
+            cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+        }
+    }
+
+    // Fungsi untuk memperbarui jumlah produk di keranjang
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cartCount.textContent = cart.length;
     }
 
     // Fungsi pencarian produk
@@ -437,6 +469,9 @@ header {
 
     // Menambahkan event listener untuk pencarian saat mengetik di input
     searchInput.addEventListener("input", searchProducts);
+
+    // Memperbarui jumlah keranjang saat halaman dimuat
+    updateCartCount();
 });
     </script>    
 </body>

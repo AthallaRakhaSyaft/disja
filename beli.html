@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terima Kasih - Shopee Clone</title>
+    <title>Terima Kasih</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="logo.jpg" type="image/jpeg"> <!-- Menambahkan favicon -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +18,17 @@
             background-color: #1976d2;
             color: white;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* Menjadikan gambar bulat */
+            object-fit: cover; /* Agar gambar menyesuaikan ukuran */
         }
 
         h1 {
@@ -113,7 +125,8 @@
 </head>
 <body>
     <header>
-        <h1>Pembelian</h1>
+        <!-- Logo bulat -->
+        <img src="logo.jpg" alt="Logo Disja">
     </header>
 
     <div class="thank-you-message">

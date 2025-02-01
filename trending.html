@@ -461,14 +461,14 @@
                 <h3>Produk 1</h3>
                 <p>Deskripsi lengkap tentang Produk 1. Produk ini memiliki kualitas terbaik, fitur unggulan, dan harga yang terjangkau.</p>
                 <div class="price">Rp 100.000</div>
-                <button class="buy-button">Lihat Produk</button>
+                <button class="buy-button" onclick="showProductDetails(1)">Lihat Produk</button>
             </div>
             <div class="product">
                 <img src="foto2.jpg" alt="Product 2">
                 <h3>Produk 2</h3>
                 <p>Deskripsi lengkap tentang Produk 2. Produk ini memiliki kualitas terbaik, fitur unggulan, dan harga yang terjangkau.</p>
                 <div class="price">Rp 200.000</div>
-                <button class="buy-button">Lihat Produk</button>
+                <button class="buy-button" onclick="showProductDetails(1)">Lihat Produk</button>
             </div>
         </div>
     </main>
@@ -504,6 +504,11 @@
             const query = searchInput.value.trim();
             filterProducts(query);
         });
+
+        function showProductDetails(productId) {
+    // Misalnya, arahkan ke halaman detail produk berdasarkan ID produk
+    window.location.href = `produk.html?id=${productId}`;
+}
     </script>
 </body>
 </html>
